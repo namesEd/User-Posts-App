@@ -10,7 +10,7 @@ import Combine
 
 class PostViewModel: ObservableObject {
     @Published var posts = [Posts]()
-    @Published var uniqueUserIDs = Set<Int>()
+    @Published var postsByUserID = [Int: [Posts]]()
     
     var cancellable = Set<AnyCancellable>()
     let service = UserService()
@@ -26,7 +26,7 @@ class PostViewModel: ObservableObject {
                 }
             } receiveValue: { posts in
                 self.posts = posts
-                self.uniqueUserIDs = Set(posts.map { $0.userId })
+                self.postsByUserID = Dictionary(grouping: posts, by: { $0.userId })
             }
             .store(in: &cancellable)
     }

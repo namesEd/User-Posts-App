@@ -17,6 +17,7 @@ struct ContentView: View {
             List(viewModel.posts) { post in
                 NavigationLink(destination: PostDetailsView(post: post)) {
                     VStack(alignment: .leading) {
+                        Text("A post from user \(post.userId)")
                         Text(post.title)
                             .font(.headline)
                     }
